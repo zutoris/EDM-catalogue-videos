@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { VideoService } from '../services/video.service';
+import { Video } from '../models/video';
 
 @Component({
   selector: 'app-navigue',
@@ -7,14 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigueComponent implements OnInit {
 
-  videosTab:any[];
+  videosTab:Video[];
 
-  constructor() { }
+  constructor(private videoService:VideoService) { }
 
   ngOnInit() {
     this.videosTab=[];
-    let video1={"titre":"Tata Yoyo","compositeur":"Annie Cordie"};
-    let video2={"titre":"Mexico","compositeur":"?"};
+    let video1 = new Video("1","Tata Yoyo","", "Annie Cordie");
+    let video2 = new Video("2","Mexico","", "?");
     this.videosTab.push(video1);
     this.videosTab.push(video2);
   }

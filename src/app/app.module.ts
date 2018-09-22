@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { VideoService } from './services/video.service';
 
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin/admin.component';
@@ -21,11 +22,9 @@ const appRoutes  =[
     RouterModule.forRoot(appRoutes),
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    VideoService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  videosTab:any[];
-
-
- }
+export class AppModule {}
