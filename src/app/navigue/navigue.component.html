@@ -1,8 +1,10 @@
 Liste des vidéos :
 <table>
   <tr *ngFor="let v of videosTab">
-    <td>{{v.titre}} - </td>
-    <td>{{v.date}} - </td>
-    <td>{{v.compositeur}}</td>
+    <td><a href={{v.cheminVideo}}><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a></td>
+    <td ><h6>&nbsp;&nbsp;<i>{{v.titre}}</i></h6></td>
+    <td *ngIf="v.compositeur">&nbsp;de {{v.compositeur}}</td>
   </tr>
 </table>
+<br>
+<button class="btn btn-primary" (click)=onSauvegarde()>save</button>

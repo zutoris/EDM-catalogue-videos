@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VideoService } from '../services/video.service';
 import { Video } from '../models/video';
+import{ Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-navigue',
@@ -10,15 +11,24 @@ import { Video } from '../models/video';
 export class NavigueComponent implements OnInit {
 
   videosTab:Video[];
+  videosSubscription:Subscription;
 
   constructor(private videoService:VideoService) { }
 
   ngOnInit() {
-    this.videosTab=[];
-    let video1 = new Video("1","Tata Yoyo","", "Annie Cordie");
-    let video2 = new Video("2","Mexico","", "?");
-    this.videosTab.push(video1);
-    this.videosTab.push(video2);
+    //this.videoService.loadBdd();
+    //this.videosTab=this.videoService.videosTab;
+    this.videosSubscription = 
+      this.videoService.videosSubject.subscribe(
+        (v: any)=>{
+          this.videosTab = v;
+        }
+        );
+
+    this.videoService.emitVideoSubject();
   }
 
+  onSauvegarde(){
+    this.videoService.saveBdd();
+  }
 }
