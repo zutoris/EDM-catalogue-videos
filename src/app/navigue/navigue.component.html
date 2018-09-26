@@ -1,3 +1,10 @@
+<div *ngFor="let interprete of tousInterpreteTab">
+    <button class="btn btn-primary" *ngIf="interprete.boutonActif"  (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</button>
+    <button class="btn btn-basic"   *ngIf="!interprete.boutonActif" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</button>
+</div>
+  <br>
+  <br>
+
 Liste des vidéos :
 <table>
   <tr *ngFor="let v of videosTab">
@@ -7,4 +14,4 @@ Liste des vidéos :
   </tr>
 </table>
 <br>
-<button class="btn btn-primary" (click)=onSauvegarde()>save</button>
+<!-- <button class="btn btn-primary" (click)=onSauvegarde()>save</button> -->

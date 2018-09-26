@@ -3,16 +3,23 @@ import { Video } from '../models/video';
 import { Mediateque } from '../models/mediateque';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { LienInterpreteVideo } from '../models/lienInterpreteVideo';
+import { Interprete } from '../models/interprete';
+import { Instrument } from '../models/instrument';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VideoService {
   private videosTab:Video[];
+  private videosAfficheesTab:Video[];
+  private lienInterpreteVideoTab:LienInterpreteVideo[];
   private mediateque:Mediateque;
+  tousInterpreteTab:Interprete[] = [];
   videosSubject = new Subject();
 
   constructor(private httpClient:HttpClient) { 
+    this.videosAfficheesTab = [];
     this.videosTab = [];
     
     this.videosTab.push(new Video(1,'data/2018/02-heure-musicale/01-clarinettes.mp4','First Jazzy Piec','43147','Michel Pellegrino'));
@@ -20,12 +27,15 @@ export class VideoService {
     this.videosTab.push(new Video(3,'data/2018/02-heure-musicale/03-guitare-William.mp4','Fanny Du','43147','R. Helinka'));
     this.videosTab.push(new Video(4,'data/2018/02-heure-musicale/04-trompette-piano-batterie-basse.mp4','Jody Grind','43147','Horace Silver'));
     this.videosTab.push(new Video(5,'data/2018/02-heure-musicale/05-violoncelle-piano.mp4','allegro de la 5è Sonate','43147','Vivaldi'));
-    this.videosTab.push(new Video(6,'data/2018/02-heure-musicale/06-violon-Mathilde.mp4','','43147',''));
+    let video6 = new Video(6,'data/2018/02-heure-musicale/06-violon-Mathilde.mp4','','43147','');
+    this.videosTab.push(video6);
     this.videosTab.push(new Video(7,'data/2018/02-heure-musicale/07-chant-Louise.mp4','Carme','43147','Stromae'));
     this.videosTab.push(new Video(8,'data/2018/02-heure-musicale/08-chant-Charlene.mp4','Stay','43147','Rihanna'));
-    this.videosTab.push(new Video(9,'data/2018/02-heure-musicale/09-guitare-Raphael-Eric.mp4','Cueca','43147','trad. bolivien'));
+    let video9 = new Video(9,'data/2018/02-heure-musicale/09-guitare-Raphael-Eric.mp4','Cueca','43147','trad. bolivien');
+    this.videosTab.push(video9);
     this.videosTab.push(new Video(10,'data/2018/02-heure-musicale/10-guitare-Raphael.mp4','Romance','43147','Fernando Sor'));
-    this.videosTab.push(new Video(11,'data/2018/02-heure-musicale/11-guitare-Eric.mp4','Un dia de novembre','43147','Léo Brouwer'));
+    let video11 = new Video(11,'data/2018/02-heure-musicale/11-guitare-Eric.mp4','Un dia de novembre','43147','Léo Brouwer');
+    this.videosTab.push(video11);
     this.videosTab.push(new Video(12,'data/2018/02-heure-musicale/13-Turning-Band-Winehouse.mp4','Back to Black','43147','Amy Winehouse'));
     this.videosTab.push(new Video(13,'data/2018/02-heure-musicale/15-Turning-Band-Shaka-Ponk.mp4','I\'m Picky','43147','Shaka Ponk'));
     this.videosTab.push(new Video(14,'data/2018/04-fete-ecole/01-guitares-Monkey_Blues.MP4','Monkey Blues','43197','Thierry Tisserand'));
@@ -35,13 +45,16 @@ export class VideoService {
     this.videosTab.push(new Video(18,'data/2018/04-fete-ecole/05-Leforestier.MP4','La petite Fugue','43197','Maxime Le Forestier'));
     this.videosTab.push(new Video(19,'data/2018/04-fete-ecole/06-eveil-Sylvestre.MP4','Les Yeux fermés','43197','Anne Sylvestre'));
     this.videosTab.push(new Video(20,'data/2018/04-fete-ecole/07-eveil-Ferrari.MP4','Les Couleurs de la Vie','43197','Christian Ferrari'));
-    /*this.videosTab.push(new Video(21,'data/2018/04-fete-ecole/08-saxophone-Couleur_Cafe.MP4','Couleur Café','43197','Serge Gainsbourg'));
+    this.videosTab.push(new Video(21,'data/2018/04-fete-ecole/08-saxophone-Couleur_Cafe.MP4','Couleur Café','43197','Serge Gainsbourg'));
     this.videosTab.push(new Video(22,'data/2018/04-fete-ecole/09-saxophone-Blue_Moon.MP4','Blue Moon','43197',''));
     this.videosTab.push(new Video(23,'data/2018/04-fete-ecole/10-ensemble-enfants.MP4','Les Yeux noirs','43197',''));
-    this.videosTab.push(new Video(24,'data/2018/04-fete-ecole/11-violons-Tetris.MP4','Korobeïnki (tetris)','43197','traditionnel russe'));
-    this.videosTab.push(new Video(25,'data/2018/04-fete-ecole/12-violons-Colors_Dance.mp4','Color\'s Dance','43197','Patt Leg'));
-    this.videosTab.push(new Video(26,'data/2018/04-fete-ecole/13-Sol_y_Luna.MP4','Luna y Sol','43197','Patrick Guillem'));
-    this.videosTab.push(new Video(27,'data/2018/04-fete-ecole/14-Ray_Charles.MP4','What I’d Say','43197','Ray Charles'));
+    let video24 = new Video(24,'data/2018/04-fete-ecole/11-violons-Tetris.MP4','Korobeïnki (tetris)','43197','traditionnel russe');
+    this.videosTab.push(video24);
+    let video25 = new Video(25,'data/2018/04-fete-ecole/12-violons-Colors_Dance.mp4','Color\'s Dance','43197','Patt Leg');
+    this.videosTab.push(video25);
+    let video26 = new Video(26,'data/2018/04-fete-ecole/13-Sol_y_Luna.MP4','Luna y Sol','43197','Patrick Guillem');
+    this.videosTab.push(video26);
+    /*this.videosTab.push(new Video(27,'data/2018/04-fete-ecole/14-Ray_Charles.MP4','What I’d Say','43197','Ray Charles'));
     this.videosTab.push(new Video(28,'data/2018/04-fete-ecole/15-Turning_Band-Back_to_Black.MP4','Back to black','43197','Amy Winehouse'));
     this.videosTab.push(new Video(29,'data/2018/04-fete-ecole/16-Turning_Band-Im_Picky.MP4','I\'m Picky','43197','Shaka Ponk'));
     this.videosTab.push(new Video(30,'data/2018/04-fete-ecole/17-Mercredis_Orchestra-Panthere_Rose.MP4','La Panthère Rose','43197','Henri Mancini'));
@@ -141,15 +154,45 @@ export class VideoService {
     this.videosTab.push(new Video(124,'data/2018/06-violon-guitare/09-ensemble-guitares.MP4','Menuet','43273','G.F. Haendel'));
     this.videosTab.push(new Video(125,'data/2018/06-violon-guitare/10-violon-guitare-piano.MP4','Quizas, quizas, quizas','43273','trad. cubain'));
     this.videosTab.push(new Video(126,'data/2018/06-violon-guitare/11-violon-guitare-Cielito_lindo.MP4','Cielito lindo','43273','trad. mexicain'));
-    this.videosTab.push(new Video(127,'data/2018/06-violon-guitare/12-guitares-Samba_Lele.MP4','Samba Lele','43273','trad. brésilien'));
-    this.videosTab.push(new Video(128,'data/2018/06-violon-guitare/13-violon-guitare-Mathilde.MP4','Senhora pastora','43273','trad. brésilien'));
-    this.videosTab.push(new Video(129,'data/2018/06-violon-guitare/14-guitare-ElCondorPassa.MP4','El Condor Passa','43273',''));
+    this.videosTab.push(new Video(127,'data/2018/06-violon-guitare/12-guitares-Samba_Lele.MP4','Samba Lele','43273','trad. brésilien'));*/
+    let video53 = new Video(128,'data/2018/06-violon-guitare/13-violon-guitare-Mathilde.MP4','Senhora pastora','43273','trad. brésilien');
+    this.videosTab.push(video53);
+    let video54 = new Video(129,'data/2018/06-violon-guitare/14-guitare-ElCondorPassa.MP4','El Condor Passa','43273','');
+    this.videosTab.push(video54);
     this.videosTab.push(new Video(130,'data/2018/06-violon-guitare/15-violon-guitare-Carnavelito.MP4','Carnavelito','43273','trad. péruvien'));
-    this.videosTab.push(new Video(131,'data/2018/06-violon-guitare/16-violon-guitare-Kingston_Calypso.MP4','Kingston Calypso','43273',''));
-    this.videosTab.push(new Video(132,'data/2018/06-violon-guitare/17-guitare-Eric-Raphael.MP4','','43273',''));
-    this.videosTab.push(new Video(133,'data/2018/06-violon-guitare/18-violon-guitare-percussion-Cueca.MP4','Cueca','43273','trad. bolivien'));
-    */
+    let video56 = new Video(131,'data/2018/06-violon-guitare/16-violon-guitare-Kingston_Calypso.MP4','Kingston Calypso','43273','');
+    this.videosTab.push(video56);
+    let video57 = new Video(132,'data/2018/06-violon-guitare/17-guitare-Eric-Raphael.MP4','','43273','');
+    this.videosTab.push(video57);
+    let video58 = new Video(133,'data/2018/06-violon-guitare/18-violon-guitare-percussion-Cueca.MP4','Cueca','43273','trad. bolivien');
+    this.videosTab.push(video58);
+    
     this.mediateque = new Mediateque(this.videosTab);
+
+    let violon=new Instrument(1,"violon");
+    let guitare=new Instrument(2,"guitare");
+
+
+    let interprete0 = new Interprete(0, "Clément");
+    this.tousInterpreteTab.push(interprete0);
+    let interprete1 = new Interprete(1, "Mathilde");
+    this.tousInterpreteTab.push(interprete1);
+    let interprete2 = new Interprete(2, "Eric");
+    this.tousInterpreteTab.push(interprete2);
+
+    this.lienInterpreteVideoTab = [];
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video6));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video24));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video25));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video26));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video53));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video56));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete1,violon, video58));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video9));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video11));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video54));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video57));
+    this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video58));
 
     this.emitVideoSubject();
 
@@ -166,7 +209,7 @@ export class VideoService {
   firebase.initializeApp(config);*/
   }
   emitVideoSubject(){
-		this.videosSubject.next(this.videosTab);
+		this.videosSubject.next(this.videosAfficheesTab);
 	}
 
   saveBdd(){
@@ -195,6 +238,22 @@ export class VideoService {
           console.log('error');
         }
       );
+  }
+
+  charge(filtreInterprete:number[]){
+
+    this.videosAfficheesTab = [];
+
+      for (let liv of this.lienInterpreteVideoTab){
+
+        for (let id of filtreInterprete){
+          if (liv.interprete.id === id){
+            this.videosAfficheesTab.push(liv.video);
+            break;
+          }
+  
+        }
+      }
   }
 
 
