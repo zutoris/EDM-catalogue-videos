@@ -240,18 +240,13 @@ export class VideoService {
       );
   }
 
-  charge(filtreInterprete:number[]){
-
+  charge(filtreInterprete:Interprete){
     this.videosAfficheesTab = [];
+    for (let liv of this.lienInterpreteVideoTab){
 
-      for (let liv of this.lienInterpreteVideoTab){
+        if (liv.interprete.id === filtreInterprete.id){
+          this.videosAfficheesTab.push(liv.video);
 
-        for (let id of filtreInterprete){
-          if (liv.interprete.id === id){
-            this.videosAfficheesTab.push(liv.video);
-            break;
-          }
-  
         }
       }
   }

@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin/admin.component';
 import { NavigueComponent } from './navigue/navigue.component';
+import { DropdownDirective } from './directive/dropdown.directive';
 
 const appRoutes  =[
   { path: '', component:NavigueComponent },
@@ -17,7 +18,8 @@ const appRoutes  =[
   declarations: [
     AppComponent,
     AdminComponent,
-    NavigueComponent
+    NavigueComponent,
+    DropdownDirective
   ],
   imports: [
     HttpClientModule,

@@ -1,14 +1,21 @@
-<div *ngFor="let interprete of tousInterpreteTab">
-    <button class="btn btn-primary" *ngIf="interprete.boutonActif"  (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</button>
-    <button class="btn btn-basic"   *ngIf="!interprete.boutonActif" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</button>
-</div>
-  <br>
-  <br>
+<li class="nav-item dropdown" appDropdown>
+  <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      interprète : {{filtreInterprete.prenom}}
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
+      <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()">(aucun)</a>
+  </div>
+</li>
+<br>
+<br>
+<br>
+
 
 Liste des vidéos :
 <table>
   <tr *ngFor="let v of videosTab">
-    <td><a href={{v.cheminVideo}}><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a></td>
+    <td><a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a></td>
     <td ><h6>&nbsp;&nbsp;<i>{{v.titre}}</i></h6></td>
     <td *ngIf="v.compositeur">&nbsp;de {{v.compositeur}}</td>
   </tr>
