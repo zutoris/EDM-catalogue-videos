@@ -14,12 +14,15 @@ export class NavigueComponent implements OnInit {
 
   videosTab:Video[]; // liste des vidéos affichées
   videosSubscription:Subscription;
+  instrumentsTab:Instrument[]; // ensemble des instruments
 
   tousInterpreteTab:Interprete[]; // ensemble des interprètes
   filtreInterprete:Interprete = new Interprete(-1, "(aucun)"); // interprète sélectionné
+  filtreInstrument:Instrument = new Instrument(-1, "(aucun)"); // instrument sélectionné
 
   constructor(private videoService:VideoService) {
     this.tousInterpreteTab = this.videoService.tousInterpreteTab;
+    this.instrumentsTab = this.videoService.instrumentsTab;
   }
 
   ngOnInit() {
@@ -40,7 +43,7 @@ export class NavigueComponent implements OnInit {
   }
 
   charge(){
-    this.videoService.charge(this.filtreInterprete);
+    this.videoService.charge(this.filtreInterprete, this.filtreInstrument);
     this.videoService.emitVideoSubject();
   }
 
@@ -56,7 +59,11 @@ export class NavigueComponent implements OnInit {
 
   onFiltreInstrument(instrument:Instrument){
     console.log("onFiltreInstrument "+instrument.id);
-    //TODO
+    this.filtreInstrument = instrument;
+    this.charge();
+  }
+  onEffaceFiltreInstrument(){
+    this.filtreInstrument =  new Instrument(-1, "(aucun)");
     this.charge();
   }
 

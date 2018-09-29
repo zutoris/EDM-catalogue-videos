@@ -15,6 +15,7 @@ export class VideoService {
   private videosAfficheesTab:Video[];
   private lienInterpreteVideoTab:LienInterpreteVideo[];
   private mediateque:Mediateque;
+  instrumentsTab:Instrument[] = [];
   tousInterpreteTab:Interprete[] = [];
   videosSubject = new Subject();
 
@@ -170,7 +171,9 @@ export class VideoService {
     this.mediateque = new Mediateque(this.videosTab);
 
     let violon=new Instrument(1,"violon");
+    this.instrumentsTab.push(violon);
     let guitare=new Instrument(2,"guitare");
+    this.instrumentsTab.push(guitare);
 
 
     let interprete0 = new Interprete(0, "Clément");
@@ -240,13 +243,26 @@ export class VideoService {
       );
   }
 
-  charge(filtreInterprete:Interprete){
+  charge(filtreInterprete:Interprete, filtreInstrument:Instrument){
     this.videosAfficheesTab = [];
     for (let liv of this.lienInterpreteVideoTab){
 
-        if (liv.interprete.id === filtreInterprete.id){
-          this.videosAfficheesTab.push(liv.video);
+        if (liv.interprete.id === filtreInterprete.id
+            || liv.instrument.id === filtreInstrument.id){
 
+          //si 2 filtres, vérifier que les vidéos ne sont pas en double
+          let dejaPresent:boolean = false;
+          if (filtreInterprete.id !== -1 && filtreInstrument.id !== -1){
+            for (let liv2 of this.videosAfficheesTab){
+              if (liv2.id === liv.video.id){
+                dejaPresent = true;
+                break;
+              }
+            }
+          }
+          if (!dejaPresent){
+            this.videosAfficheesTab.push(liv.video);
+          }
         }
       }
   }

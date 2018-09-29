@@ -7,6 +7,15 @@
       <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()">(aucun)</a>
   </div>
 </li>
+<li class="nav-item dropdown" appDropdown>
+  <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      instrument : {{filtreInstrument.nom}}
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
+      <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()">(aucun)</a>
+  </div>
+</li>
 <br>
 <br>
 <br>
