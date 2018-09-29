@@ -17,12 +17,15 @@ export class NavigueComponent implements OnInit {
   instrumentsTab:Instrument[]; // ensemble des instruments
 
   tousInterpreteTab:Interprete[]; // ensemble des interprètes
+  datesTab:String[]; // ensemble des dates
   filtreInterprete:Interprete = new Interprete(-1, "(aucun)"); // interprète sélectionné
   filtreInstrument:Instrument = new Instrument(-1, "(aucun)"); // instrument sélectionné
+  filtreDate:String = "aucune"; // date sélectionnée
 
   constructor(private videoService:VideoService) {
     this.tousInterpreteTab = this.videoService.tousInterpreteTab;
     this.instrumentsTab = this.videoService.instrumentsTab;
+    this.datesTab = this.videoService.datesTab;
   }
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class NavigueComponent implements OnInit {
   }
 
   charge(){
-    this.videoService.charge(this.filtreInterprete, this.filtreInstrument);
+    this.videoService.charge(this.filtreInterprete, this.filtreInstrument, this.filtreDate);
     this.videoService.emitVideoSubject();
   }
 
@@ -67,4 +70,13 @@ export class NavigueComponent implements OnInit {
     this.charge();
   }
 
+  onFiltreDate(dateC:string){
+    console.log("onFiltreDate "+dateC);
+    this.filtreDate = dateC;
+    this.charge();
+  }
+  onEffaceFiltreDate(){
+    this.filtreDate = "(aucune)";
+    this.charge();
+  }
 }

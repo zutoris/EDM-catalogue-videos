@@ -4,7 +4,7 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
-      <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()">(aucun)</a>
+      <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
   </div>
 </li>
 <li class="nav-item dropdown" appDropdown>
@@ -13,7 +13,16 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
-      <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()">(aucun)</a>
+      <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
+  </div>
+</li>
+<li class="nav-item dropdown" appDropdown>
+  <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      date : {{filtreDate}}
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
+      <a class="dropdown-item" *ngIf="filtreDate !== (aucune)" (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
   </div>
 </li>
 <br>
@@ -25,7 +34,8 @@ Liste des vidéos :
 <table>
   <tr *ngFor="let v of videosTab">
     <td><a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a></td>
-    <td ><h6>&nbsp;&nbsp;<i>{{v.titre}}</i></h6></td>
+    <td >&nbsp;&nbsp;{{v.date}}</td>
+    <td ><h6><i>&nbsp;&nbsp;&nbsp;{{v.titre}}</i></h6></td>
     <td *ngIf="v.compositeur">&nbsp;de {{v.compositeur}}</td>
   </tr>
 </table>
