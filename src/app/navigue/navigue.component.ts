@@ -21,6 +21,7 @@ export class NavigueComponent implements OnInit {
   filtreInterprete:Interprete = new Interprete(-1, "(aucun)"); // interprète sélectionné
   filtreInstrument:Instrument = new Instrument(-1, "(aucun)"); // instrument sélectionné
   filtreDate:String; // date sélectionnée
+  videoSelectionnee:Video;
 
   constructor(private videoService:VideoService) {
     this.tousInterpreteTab = this.videoService.tousInterpreteTab;
@@ -80,5 +81,9 @@ export class NavigueComponent implements OnInit {
   onEffaceFiltreDate(){
     this.filtreDate = "(aucune)";
     this.charge();
+  }
+
+  onRegardeVideo(video:Video){
+    this.videoSelectionnee = video;
   }
 }

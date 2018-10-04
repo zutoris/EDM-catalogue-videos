@@ -1,58 +1,118 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="nav-item dropdown" appDropdown>
-        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            date : {{filtreDate}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
-            <a class="dropdown-item" *ngIf='filtreDate !== "(aucune)"' (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
-        </div>
-      </div>      
-    </div>
 
-    <div class="col">
-      <div class="nav-item dropdown" appDropdown>
-        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            interprète : {{filtreInterprete.prenom}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
-            <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
-        </div>
+  <div *ngIf="videoSelectionnee == undefined;then afficheListeVideos else afficheVideoSelectionnee"></div>
+  <ng-template #afficheListeVideos>
+      <div class="row">
+          <div class="col">
+            <div class="nav-item dropdown" appDropdown>
+              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  date : {{filtreDate}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
+                  <a class="dropdown-item" *ngIf='filtreDate !== "(aucune)"' (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
+              </div>
+            </div>      
+          </div>
+      
+          <div class="col">
+            <div class="nav-item dropdown" appDropdown>
+              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  interprète : {{filtreInterprete.prenom}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
+                  <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col">
+            <div class="nav-item dropdown" appDropdown>
+              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  instrument : {{filtreInstrument.nom}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
+                  <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
+              </div>
+            </div>      
+          </div>
+        </div> <!-- row -->
+        <br>
+ 
+        Liste des vidéos ({{videosTab.length}}) :
+      <div class="row" *ngFor="let v of videosTab">
+          <a (click)="onRegardeVideo(v)"><img src={{v.cheminImage}} /></a>
+          {{v.date}}
+          <h6><i>{{v.titre}}</i></h6>
+          {{v.compositeur}}
       </div>
-    </div>
-    
-    <div class="col">
-      <div class="nav-item dropdown" appDropdown>
-        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            instrument : {{filtreInstrument.nom}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
-            <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
+  </ng-template>
+
+
+
+  <ng-template #afficheVideoSelectionnee>
+    <div class="row"><!-- rangée unique -->
+      <div class="col-8">
+        <video width="720" height="540" autoplay controls><!-- width="860" height="654"  1440 1080    youtube: 854px 480px-->
+            <source src={{videoSelectionnee.cheminVideo}} type="video/mp4">
+            Your browser does not support the video tag.
+        </video>      
+        {{videoSelectionnee.date}}
+        <h6><i>{{videoSelectionnee.titre}}</i></h6>
+        {{videoSelectionnee.compositeur}}          
+      </div><!-- col-8 -->
+
+
+      <div class="col-3">
+        <div class="row">
+          <div class="nav-item dropdown" appDropdown>
+              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  date : {{filtreDate}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
+                  <a class="dropdown-item" *ngIf='filtreDate !== "(aucune)"' (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
+              </div>
+          </div>      
+        </div><!-- row -->
+      
+        <div class="row">
+          <div class="nav-item dropdown" appDropdown>
+              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  interprète : {{filtreInterprete.prenom}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
+                  <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
+              </div>
+          </div>
+        </div><!-- row -->
+          
+        <div class="row">
+            <div class="nav-item dropdown" appDropdown>
+              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  instrument : {{filtreInstrument.nom}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
+                  <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
+              </div>
+            </div>      
+        </div><!-- row -->
+        <br>
+ 
+        Liste des vidéos ({{videosTab.length}}) :
+        <div class="row" *ngFor="let v of videosTab">
+          <a (click)="onRegardeVideo(v)"><img src={{v.cheminImage}} /></a>
+          {{v.date}}
+          <h6><i>{{v.titre}}</i></h6>
+          {{v.compositeur}}
         </div>
-      </div>      
-    </div>
-  </div> <!-- row -->
+        
+      </div><!-- col-3 -->
 
-  <br>
-  Liste des vidéos ({{videosTab.length}}) :
-
-  <div class="row" *ngFor="let v of videosTab">
-      <a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}} /></a>
-      {{v.date}}
-      <h6><i>{{v.titre}}</i></h6>
-      {{v.compositeur}}
-  </div>
-
-  <!-- <div class="row">
-    <div class="col-sm" *ngFor="let v of videosTab">
-      <a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a>
-      {{v.date}}
-      <h6><i>{{v.titre}}</i></h6>
-      {{v.compositeur}}
-    </div>
-  </div> -->
+    </div><!-- rangée unique -->
+  </ng-template>
 </div> <!-- container -->
