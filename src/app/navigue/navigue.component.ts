@@ -20,7 +20,7 @@ export class NavigueComponent implements OnInit {
   datesTab:String[]; // ensemble des dates
   filtreInterprete:Interprete = new Interprete(-1, "(aucun)"); // interprète sélectionné
   filtreInstrument:Instrument = new Instrument(-1, "(aucun)"); // instrument sélectionné
-  filtreDate:String = "aucune"; // date sélectionnée
+  filtreDate:String; // date sélectionnée
 
   constructor(private videoService:VideoService) {
     this.tousInterpreteTab = this.videoService.tousInterpreteTab;
@@ -38,7 +38,9 @@ export class NavigueComponent implements OnInit {
         }
         );
 
-    this.videoService.emitVideoSubject();
+    // initialisation avec la dernière date du tableau
+    this.filtreDate = this.videoService.datesTab[this.videoService.datesTab.length-1];
+    this.charge();
   }
 
   onSauvegarde(){

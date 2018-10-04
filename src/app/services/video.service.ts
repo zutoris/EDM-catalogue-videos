@@ -216,18 +216,6 @@ export class VideoService {
     }
 
     this.emitVideoSubject();
-
-    //src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"
-    // Initialize Firebase
-  /*var config = {
-    apiKey: "AIzaSyCd1fS942sqrNXfaCx8wCdPon0mTd9ZKQg",
-    authDomain: "edm-videos.firebaseapp.com",
-    databaseURL: "https://edm-videos.firebaseio.com",
-    projectId: "edm-videos",
-    storageBucket: "edm-videos.appspot.com",
-    messagingSenderId: "630319060067"
-  };
-  firebase.initializeApp(config);*/
   }
   emitVideoSubject(){
 		this.videosSubject.next(this.videosAfficheesTab);
@@ -235,7 +223,8 @@ export class VideoService {
 
   saveBdd(){
     this.httpClient
-    .post("https://edm-videos.firebaseio.com/mediateque.json",
+    .post("https://edm-videos.fir" 
+    +"ebaseio.com/mediateque.json",
       this.mediateque)
     .subscribe(
       () => {
@@ -249,7 +238,8 @@ export class VideoService {
 
   loadBdd(){
       this.httpClient
-      .get<Video[]>("https://edm-videos.firebaseio.com/videos")
+      .get<Video[]>("https://edm-videos.fir"
+      +"ebaseio.com/videos")
       .subscribe(
         (response) => {
           this.videosTab=response;
@@ -263,29 +253,22 @@ export class VideoService {
 
   charge(filtreInterprete:Interprete, filtreInstrument:Instrument, filtreDate:String){
     this.videosAfficheesTab = [];
+    let affiche:boolean;
     for (let liv of this.lienInterpreteVideoTab){
-
-      console.log("vidéo : "+liv.video.date+ "  date filtre : "+filtreDate);
-        if (liv.interprete.id === filtreInterprete.id
-            || liv.instrument.id === filtreInstrument.id
-            || liv.video.date === filtreDate){
-              console.log("vidéo à afficher");
-
-          //si 2 filtres, vérifier que les vidéos ne sont pas en double
-          let dejaPresent:boolean = false;
-          if (filtreInterprete.id !== -1 && filtreInstrument.id !== -1){
-            for (let liv2 of this.videosAfficheesTab){
-              if (liv2.id === liv.video.id){
-                dejaPresent = true;
-                break;
-              }
-            }
-          }
-          if (!dejaPresent){
-            this.videosAfficheesTab.push(liv.video);
-          }
-        }
+      affiche = true;
+      if (filtreInterprete.id !== -1){
+        affiche = affiche && filtreInterprete.id === liv.interprete.id;
       }
+      if (filtreInstrument.id !== -1){
+        affiche = affiche && filtreInstrument.id === liv.instrument.id;
+      }
+      if (filtreDate !== "(aucune)"){
+        affiche = affiche && filtreDate === liv.video.date;
+      }
+      if (affiche){
+        this.videosAfficheesTab.push(liv.video);
+      }
+    }
   }
 
 

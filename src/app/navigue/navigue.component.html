@@ -1,43 +1,58 @@
-<li class="nav-item dropdown" appDropdown>
-  <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      interprète : {{filtreInterprete.prenom}}
-  </a>
-  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
-      <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
-  </div>
-</li>
-<li class="nav-item dropdown" appDropdown>
-  <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      instrument : {{filtreInstrument.nom}}
-  </a>
-  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
-      <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
-  </div>
-</li>
-<li class="nav-item dropdown" appDropdown>
-  <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      date : {{filtreDate}}
-  </a>
-  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
-      <a class="dropdown-item" *ngIf="filtreDate !== (aucune)" (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
-  </div>
-</li>
-<br>
-<br>
-<br>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="nav-item dropdown" appDropdown>
+        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            date : {{filtreDate}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
+            <a class="dropdown-item" *ngIf='filtreDate !== "(aucune)"' (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
+        </div>
+      </div>      
+    </div>
 
+    <div class="col">
+      <div class="nav-item dropdown" appDropdown>
+        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            interprète : {{filtreInterprete.prenom}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
+            <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col">
+      <div class="nav-item dropdown" appDropdown>
+        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            instrument : {{filtreInstrument.nom}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
+            <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
+        </div>
+      </div>      
+    </div>
+  </div> <!-- row -->
 
-Liste des vidéos :
-<table>
-  <tr *ngFor="let v of videosTab">
-    <td><a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a></td>
-    <td >&nbsp;&nbsp;{{v.date}}</td>
-    <td ><h6><i>&nbsp;&nbsp;&nbsp;{{v.titre}}</i></h6></td>
-    <td *ngIf="v.compositeur">&nbsp;de {{v.compositeur}}</td>
-  </tr>
-</table>
-<br>
-<!-- <button class="btn btn-primary" (click)=onSauvegarde()>save</button> -->
+  <br>
+  Liste des vidéos ({{videosTab.length}}) :
+
+  <div class="row" *ngFor="let v of videosTab">
+      <a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}} /></a>
+      {{v.date}}
+      <h6><i>{{v.titre}}</i></h6>
+      {{v.compositeur}}
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-sm" *ngFor="let v of videosTab">
+      <a href={{v.cheminVideo}} target="_blank"><img src={{v.cheminImage}}  class="img-fluid img-thumbnail"/></a>
+      {{v.date}}
+      <h6><i>{{v.titre}}</i></h6>
+      {{v.compositeur}}
+    </div>
+  </div> -->
+</div> <!-- container -->
