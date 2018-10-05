@@ -3,7 +3,7 @@
   <div *ngIf="videoSelectionnee == undefined;then afficheListeVideos else afficheVideoSelectionnee"></div>
   <ng-template #afficheListeVideos>
       <div class="row">
-          <div class="col">
+          <div class="col-lg">
             <div class="nav-item dropdown" appDropdown>
               <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   date : {{filtreDate}}
@@ -15,7 +15,7 @@
             </div>      
           </div>
       
-          <div class="col">
+          <div class="col-lg">
             <div class="nav-item dropdown" appDropdown>
               <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   interprète : {{filtreInterprete.prenom}}
@@ -27,7 +27,7 @@
             </div>
           </div>
           
-          <div class="col">
+          <div class="col-lg">
             <div class="nav-item dropdown" appDropdown>
               <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   instrument : {{filtreInstrument.nom}}
@@ -42,11 +42,14 @@
         <br>
  
         Liste des vidéos ({{videosTab.length}}) :
-      <div class="row" *ngFor="let v of videosTab">
-          <a (click)="onRegardeVideo(v)"><img src={{v.cheminImage}} /></a>
-          {{v.date}}
-          <h6><i>{{v.titre}}</i></h6>
-          {{v.compositeur}}
+      <div class="row" *ngFor="let v of videosTab" class="thumbnail">
+          <a (click)="onRegardeVideo(v)">
+            <img src={{v.cheminImage}} />
+            <div class="caption">
+              <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
+              <div class="text-muted small">{{v.date}}</div>
+            </div>
+          </a>
       </div>
   </ng-template>
 
@@ -54,18 +57,19 @@
 
   <ng-template #afficheVideoSelectionnee>
     <div class="row"><!-- rangée unique -->
-      <div class="col-8">
+      <div class="col-lg-8">
         <video width="720" height="540" autoplay controls><!-- width="860" height="654"  1440 1080    youtube: 854px 480px-->
             <source src={{videoSelectionnee.cheminVideo}} type="video/mp4">
             Your browser does not support the video tag.
         </video>      
-        {{videoSelectionnee.date}}
-        <h6><i>{{videoSelectionnee.titre}}</i></h6>
-        {{videoSelectionnee.compositeur}}          
+        <div class="caption">
+                <div class="text-primary"><div>{{videoSelectionnee.titre}}</div><div>{{videoSelectionnee.compositeur}}</div></div>
+                <div class="text-muted small">{{videoSelectionnee.date}}</div>
+            </div>
       </div><!-- col-8 -->
 
 
-      <div class="col-3">
+      <div class="col-lg-4">
         <div class="row">
           <div class="nav-item dropdown" appDropdown>
               <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -104,11 +108,14 @@
         <br>
  
         Liste des vidéos ({{videosTab.length}}) :
-        <div class="row" *ngFor="let v of videosTab">
-          <a (click)="onRegardeVideo(v)"><img src={{v.cheminImage}} /></a>
-          {{v.date}}
-          <h6><i>{{v.titre}}</i></h6>
-          {{v.compositeur}}
+        <div class="row" *ngFor="let v of videosTab" class="thumbnail">
+          <a (click)="onRegardeVideo(v)">
+                <img src={{v.cheminImage}}/>
+                <div class="caption">
+                    <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
+                    <div class="text-muted small">{{v.date}}</div>
+                </div>
+          </a>
         </div>
         
       </div><!-- col-3 -->
