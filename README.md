@@ -1,5 +1,15 @@
 # VideosEDM
 
+Does not working for now. 
+
+The aim is to display videos.
+
+For now, video paths are hard-coded.
+
+
+#
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
 
 ## Development server
