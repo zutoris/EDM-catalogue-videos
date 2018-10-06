@@ -17,10 +17,10 @@ export class NavigueComponent implements OnInit {
   instrumentsTab:Instrument[]; // ensemble des instruments
 
   tousInterpreteTab:Interprete[]; // ensemble des interprètes
-  datesTab:String[]; // ensemble des dates
+  datesTab:string[]; // ensemble des dates
   filtreInterprete:Interprete = new Interprete(-1, "(aucun)"); // interprète sélectionné
   filtreInstrument:Instrument = new Instrument(-1, "(aucun)"); // instrument sélectionné
-  filtreDate:String; // date sélectionnée
+  filtreDate:string; // date sélectionnée
   videoSelectionnee:Video;
 
   constructor(private videoService:VideoService) {
@@ -79,7 +79,7 @@ export class NavigueComponent implements OnInit {
     this.charge();
   }
   onEffaceFiltreDate(){
-    this.filtreDate = "(aucune)";
+    this.filtreDate = this.videoService.aucuneDate;
     this.charge();
   }
 

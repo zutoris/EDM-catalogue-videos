@@ -19,6 +19,7 @@ export class VideoService {
   datesTab:string[]; // ensemble des dates de concert
   tousInterpreteTab:Interprete[] = [];
   videosSubject = new Subject();
+  aucuneDate:string = "(aucune)";
 
   constructor(private httpClient:HttpClient) { 
     this.videosAfficheesTab = [];
@@ -56,7 +57,7 @@ export class VideoService {
     this.videosTab.push(video25);
     let video26 = new Video(26,'data/2018/04-fete-ecole/13-Sol_y_Luna.MP4','Luna y Sol','07/04/2018','Patrick Guillem');
     this.videosTab.push(video26);
-    /*this.videosTab.push(new Video(27,'data/2018/04-fete-ecole/14-Ray_Charles.MP4','What I\’d Say','07/04/2018','Ray Charles'));
+    this.videosTab.push(new Video(27,'data/2018/04-fete-ecole/14-Ray_Charles.MP4','What I\’d Say','07/04/2018','Ray Charles'));
     this.videosTab.push(new Video(28,'data/2018/04-fete-ecole/15-Turning_Band-Back_to_Black.MP4','Back to black','07/04/2018','Amy Winehouse'));
     this.videosTab.push(new Video(29,'data/2018/04-fete-ecole/16-Turning_Band-Im_Picky.MP4','I\'m Picky','07/04/2018','Shaka Ponk'));
     this.videosTab.push(new Video(30,'data/2018/04-fete-ecole/17-Mercredis_Orchestra-Panthere_Rose.MP4','La Panthère Rose','07/04/2018','Henri Mancini'));
@@ -157,7 +158,7 @@ export class VideoService {
     this.videosTab.push(new Video(125,'data/2018/06-violon-guitare/10-violon-guitare-piano.MP4','Quizas, quizas, quizas','22/06/2018','trad. cubain'));
     this.videosTab.push(new Video(126,'data/2018/06-violon-guitare/11-violon-guitare-Cielito_lindo.MP4','Cielito lindo','22/06/2018','trad. mexicain'));
     this.videosTab.push(new Video(127,'data/2018/06-violon-guitare/12-guitares-Samba_Lele.MP4','Samba Lele','22/06/2018','trad. brésilien'));
-    */
+    
 
     let video53 = new Video(128,'data/2018/06-violon-guitare/13-violon-guitare-Mathilde.MP4','Senhora pastora','22/06/2018','trad. brésilien');
     this.videosTab.push(video53);
@@ -251,24 +252,39 @@ export class VideoService {
       );
   }
 
-  charge(filtreInterprete:Interprete, filtreInstrument:Instrument, filtreDate:String){
+  charge(filtreInterprete:Interprete, filtreInstrument:Instrument, filtreDate:string){
     this.videosAfficheesTab = [];
-    let affiche:boolean;
-    for (let liv of this.lienInterpreteVideoTab){
-      affiche = true;
-      if (filtreInterprete.id !== -1){
-        affiche = affiche && filtreInterprete.id === liv.interprete.id;
+
+    if (filtreInterprete.id === -1
+      && filtreInstrument.id === -1) {
+
+        //si pas de filtre sur l'interprète ou l'instrument, alors on part de videosTab, pour affichage également les vidéos n'ayant pas de 'LienInterpreteVideo'.
+        for (let vid of this.videosTab){
+          if (filtreDate === this.aucuneDate
+            || filtreDate === vid.date){
+            this.videosAfficheesTab.push(vid);
+          }
+        }    
+
+      } else{
+
+        let affiche:boolean;
+        for (let liv of this.lienInterpreteVideoTab){
+          affiche = true;
+          if (filtreInterprete.id !== -1){
+            affiche = affiche && filtreInterprete.id === liv.interprete.id;
+          }
+          if (filtreInstrument.id !== -1){
+            affiche = affiche && filtreInstrument.id === liv.instrument.id;
+          }
+          if (filtreDate !== this.aucuneDate){
+            affiche = affiche && filtreDate === liv.video.date;
+          }
+          if (affiche){
+            this.videosAfficheesTab.push(liv.video);
+          }
+        }    
       }
-      if (filtreInstrument.id !== -1){
-        affiche = affiche && filtreInstrument.id === liv.instrument.id;
-      }
-      if (filtreDate !== "(aucune)"){
-        affiche = affiche && filtreDate === liv.video.date;
-      }
-      if (affiche){
-        this.videosAfficheesTab.push(liv.video);
-      }
-    }
   }
 
 
