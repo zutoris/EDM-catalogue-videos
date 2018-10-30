@@ -39,8 +39,8 @@ export class NavigueComponent implements OnInit {
         }
         );
 
-    // initialisation avec la dernière date du tableau
-    this.filtreDate = this.videoService.datesTab[this.videoService.datesTab.length-1];
+    // initialisation avec la première date du tableau
+    this.filtreDate = this.videoService.datesTab[0];
     this.charge();
   }
 

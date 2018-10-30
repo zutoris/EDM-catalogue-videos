@@ -16,7 +16,7 @@ export class VideoService {
   private lienInterpreteVideoTab:LienInterpreteVideo[];
   private mediateque:Mediateque;
   instrumentsTab:Instrument[] = [];
-  datesTab:string[]; // ensemble des dates de concert
+  datesTab = []; // ensemble des dates de concert
   tousInterpreteTab:Interprete[] = [];
   videosSubject = new Subject();
   aucuneDate:string = "(aucune)";
@@ -201,26 +201,49 @@ export class VideoService {
     this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video57));
     this.lienInterpreteVideoTab.push(new LienInterpreteVideo(interprete2,guitare, video58));
 
-    // Constitution de la liste des dates
-    this.datesTab = [];
-    for (let v of this.videosTab){
-      let trouve:boolean = false;
-      for (let d of this.datesTab){
-        if (d === v.date){
-          trouve = true;
-          break;
-        }
-      }
-      if (!trouve){
-        this.datesTab.push(v.date);
-      }
-    }
+    this.buildDatesList();
 
     this.emitVideoSubject();
   }
   emitVideoSubject(){
 		this.videosSubject.next(this.videosAfficheesTab);
 	}
+
+  // Constitution de la liste des dates de concert
+  buildDatesList(){
+    // recessement des dates
+    let intermediateTab = [];
+    for (let v of this.videosTab){
+      let trouve:boolean = false;
+      for (let d of intermediateTab){
+        if (d.dateValue === v.date){
+          trouve = true;
+          break;
+        }
+      }
+      if (!trouve){
+        // écriture des dates sous forme 'aaaammjj' pour faciliter la comparaison
+        let dateNumerique:number = parseInt(v.date.substring(6, 10) + v.date.substring(3, 5) + v.date.substring(0, 2));
+        intermediateTab.push({dateValue:v.date, numericValue:dateNumerique});
+      }
+    }
+
+    // tri des dates dans l'ordre décroissant
+    let nombreDates:number = intermediateTab.length;
+    for (let i:number = 0; i < nombreDates; i++){
+      let maxDate:number = undefined;
+      let indexMax:number = undefined;
+      for (let j:number = 0; j < nombreDates; j++){
+        let elementDateJ = intermediateTab[j];
+        if (elementDateJ != undefined && (maxDate == undefined || maxDate < elementDateJ.numericValue)){
+          maxDate = elementDateJ.numericValue;
+          indexMax = j;
+        }
+      }  
+      this.datesTab.push(intermediateTab[indexMax].dateValue);
+      intermediateTab[indexMax] = undefined;
+    }
+  }
 
   saveBdd(){
     this.httpClient
