@@ -275,39 +275,16 @@ export class VideoService {
       );
   }
 
-  charge(filtreInterprete:Interprete, filtreInstrument:Instrument, filtreDate:string){
+  charge(filtreDate:string){
     this.videosAfficheesTab = [];
 
-    if (filtreInterprete.id === -1
-      && filtreInstrument.id === -1) {
-
-        //si pas de filtre sur l'interprète ou l'instrument, alors on part de videosTab, pour affichage également les vidéos n'ayant pas de 'LienInterpreteVideo'.
-        for (let vid of this.videosTab){
-          if (filtreDate === this.aucuneDate
-            || filtreDate === vid.date){
-            this.videosAfficheesTab.push(vid);
-          }
-        }    
-
-      } else{
-
-        let affiche:boolean;
-        for (let liv of this.lienInterpreteVideoTab){
-          affiche = true;
-          if (filtreInterprete.id !== -1){
-            affiche = affiche && filtreInterprete.id === liv.interprete.id;
-          }
-          if (filtreInstrument.id !== -1){
-            affiche = affiche && filtreInstrument.id === liv.instrument.id;
-          }
-          if (filtreDate !== this.aucuneDate){
-            affiche = affiche && filtreDate === liv.video.date;
-          }
-          if (affiche){
-            this.videosAfficheesTab.push(liv.video);
-          }
-        }    
+    //si pas de filtre sur l'interprète ou l'instrument, alors on part de videosTab, pour affichage également les vidéos n'ayant pas de 'LienInterpreteVideo'.
+    for (let vid of this.videosTab){
+      if (filtreDate === this.aucuneDate
+        || filtreDate === vid.date){
+        this.videosAfficheesTab.push(vid);
       }
+    }    
   }
 
 

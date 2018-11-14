@@ -1,3 +1,13 @@
+<!-- TODO
+    - rendre les vidéos responsives, sans doute avec videogular
+    - afficher un main sur les images pour indiquer un lien
+    - faire les services serveur et BDD
+    - rendre modifiable les instruments et interprètes
+    - colorer les filtres pour clarifier ceux qui sont actifs
+    - scrollbar verticale pour les images ? à condition que ça ne dégrade pas pour les petits écrans. 
+    - afficher séparateurs (blanc ?) entre les images. Youtube affiche les commentaires à droite des images. Pertinent ? 
+-->
+
 <div class="container">
 
   <div *ngIf="videoSelectionnee == undefined;then afficheListeVideos else afficheVideoSelectionnee"></div>
@@ -15,29 +25,6 @@
             </div>      
           </div>
       
-          <div class="col-lg">
-            <div class="nav-item dropdown" appDropdown>
-              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  interprète : {{filtreInterprete.prenom}}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
-                  <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-lg">
-            <div class="nav-item dropdown" appDropdown>
-              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  instrument : {{filtreInstrument.nom}}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
-                  <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
-              </div>
-            </div>      
-          </div>
         </div> <!-- row -->
         <br>
  
@@ -81,29 +68,6 @@
           </div>      
         </div><!-- row -->
       
-        <div class="row">
-          <div class="nav-item dropdown" appDropdown>
-              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  interprète : {{filtreInterprete.prenom}}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" *ngFor="let interprete of tousInterpreteTab" (click)="onFiltreInterprete(interprete)">{{interprete.prenom}}</a>
-                  <a class="dropdown-item" *ngIf="filtreInterprete.id !== -1" (click)="onEffaceFiltreInterprete()"><i>(aucun)</i></a>
-              </div>
-          </div>
-        </div><!-- row -->
-          
-        <div class="row">
-            <div class="nav-item dropdown" appDropdown>
-              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  instrument : {{filtreInstrument.nom}}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" *ngFor="let instrument of instrumentsTab" (click)="onFiltreInstrument(instrument)">{{instrument.nom}}</a>
-                  <a class="dropdown-item" *ngIf="filtreInstrument.id !== -1" (click)="onEffaceFiltreInstrument()"><i>(aucun)</i></a>
-              </div>
-            </div>      
-        </div><!-- row -->
         <br>
  
         Liste des vidéos ({{videosTab.length}}) :
