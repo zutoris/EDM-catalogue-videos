@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VideoService } from '../services/video.service';
 import { Video } from '../models/video';
-import{ Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-navigue',
@@ -12,6 +12,7 @@ export class NavigueComponent implements OnInit {
 
   videosTab:Video[]; // liste des vidéos affichées
   videosSubscription:Subscription;
+  dateSubscription:Subscription;
 
   datesTab:string[]; // ensemble des dates
   filtreDate:string; // date sélectionnée
@@ -22,22 +23,19 @@ export class NavigueComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.videoService.loadBdd();
-    //this.videosTab=this.videoService.videosTab;
     this.videosSubscription = 
       this.videoService.videosSubject.subscribe(
         (v: any)=>{
           this.videosTab = v;
         }
+      );
+
+    this.dateSubscription = 
+        this.videoService.dateSubject.subscribe(
+          (d: any)=>{
+            this.filtreDate = d;
+          }
         );
-
-    // initialisation avec la première date du tableau
-    this.filtreDate = this.videoService.datesTab[0];
-    this.charge();
-  }
-
-  onSauvegarde(){
-    this.videoService.saveBdd();
   }
 
   charge(){

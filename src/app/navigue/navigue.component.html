@@ -28,13 +28,14 @@
         </div> <!-- row -->
         <br>
  
-        Liste des vidéos ({{videosTab.length}}) :
+      Liste des vidéos :
       <div class="row" *ngFor="let v of videosTab" class="thumbnail">
           <a (click)="onRegardeVideo(v)">
             <img src={{v.cheminImage}} />
             <div class="caption">
               <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
-              <div class="text-muted small">{{v.date}}</div>
+              &nbsp;
+              <!-- <div class="text-muted small">{{v.date}}</div> -->
             </div>
           </a>
       </div>
@@ -76,7 +77,8 @@
                 <img src={{v.cheminImage}}/>
                 <div class="caption">
                     <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
-                    <div class="text-muted small">{{v.date}}</div>
+                    &nbsp;
+                    <!-- <div class="text-muted small">{{v.date}}</div> -->
                 </div>
           </a>
         </div>
