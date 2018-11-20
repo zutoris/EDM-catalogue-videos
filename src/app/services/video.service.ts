@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Video } from '../models/video';
+import { Concert } from '../models/concert';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
@@ -9,14 +10,26 @@ import { Subject } from 'rxjs';
 export class VideoService {
   private videosTab:Video[];
   private videosAfficheesTab:Video[];
-  datesTab = []; // ensemble des dates de concert
+  private concertsTab:Concert[]; // ensemble des dates de concert
   videosSubject = new Subject();
-  dateSubject = new Subject();
-  aucuneDate:string = "(aucune)";
+  concertSubject = new Subject();
 
   constructor(private httpClient:HttpClient) { 
     this.videosAfficheesTab = [];
     this.videosTab = [];
+
+    let urlListeConcert = 'http://www.ecole-musique-sautron.fr/data/concerts-list.json';
+  	this.httpClient
+      .get<any>(urlListeConcert)
+      .subscribe(
+        (response) => {
+          this.concertsTab = response;
+          this.buildDatesList();
+          this.concertSubject.next(this.concertsTab);
+        },(error)=>{
+          console.log('error in calling concerts-list.json : '+JSON.stringify(error));
+        }
+      );
 
     let url = 'http://www.ecole-musique-sautron.fr/data/video-list.json';
     //let heuredebut:Date=new Date();
@@ -27,17 +40,17 @@ export class VideoService {
           //let heureTelechargementFini:Date=new Date();
           //console.log(response);
           this.videosTab=response;
-          this.buildDatesList();
           //let heureTriFini:Date=new Date();
-          this.dateSubject.next(this.datesTab[0]);
-          this.charge(this.datesTab[0]);
+          if (this.concertsTab == undefined){
+            console.log("Erreur : téléchargement des dates plus long que celui des vidéos.")
+          }
+          this.charge(this.concertsTab[0]);
           this.emitVideoSubject();
-
           //console.log("nombre de vidéos importées : " + this.videosTab.length);
           //console.log("Durée téléchargement : "+(heureTelechargementFini.getTime()-heuredebut.getTime())+" ms");
           //console.log("Durée tri:"+(heureTriFini.getTime()-heureTelechargementFini.getTime()));
         },(error)=>{
-          console.log('error in calling get : '+JSON.stringify(error));
+          console.log('error in calling video-list.json : '+JSON.stringify(error));
         }
       );
   }
@@ -48,47 +61,18 @@ export class VideoService {
 
   // Constitution de la liste des dates de concert
   buildDatesList(){
-    // recessement des dates
-    let intermediateTab = [];
-    for (let v of this.videosTab){
-      let trouve:boolean = false;
-      for (let d of intermediateTab){
-        if (d.dateValue === v.date){
-          trouve = true;
-          break;
-        }
-      }
-      if (!trouve){
-        // écriture des dates sous forme 'aaaammjj' pour faciliter la comparaison
-        let dateNumerique:number = parseInt(v.date.substring(6, 10) + v.date.substring(3, 5) + v.date.substring(0, 2));
-        intermediateTab.push({dateValue:v.date, numericValue:dateNumerique});
-      }
-    }
-
-    // tri des dates dans l'ordre décroissant
-    let nombreDates:number = intermediateTab.length;
-    for (let i:number = 0; i < nombreDates; i++){
-      let maxDate:number = undefined;
-      let indexMax:number = undefined;
-      for (let j:number = 0; j < nombreDates; j++){
-        let elementDateJ = intermediateTab[j];
-        if (elementDateJ != undefined && (maxDate == undefined || maxDate < elementDateJ.numericValue)){
-          maxDate = elementDateJ.numericValue;
-          indexMax = j;
-        }
-      }  
-      this.datesTab.push(intermediateTab[indexMax].dateValue);
-      intermediateTab[indexMax] = undefined;
+    let identifiant:number = 0;
+    for (let c of this.concertsTab){
+      c.id = identifiant++;
     }
   }
 
-  charge(filtreDate:string){
+  charge(filtreDate:Concert){
     this.videosAfficheesTab = [];
+    let dateConcertAAfficher:string = filtreDate.date;
 
-    //si pas de filtre sur l'interprète ou l'instrument, alors on part de videosTab, pour affichage également les vidéos n'ayant pas de 'LienInterpreteVideo'.
     for (let vid of this.videosTab){
-      if (filtreDate === this.aucuneDate
-        || filtreDate === vid.date){
+      if (dateConcertAAfficher === vid.date){
         this.videosAfficheesTab.push(vid);
       }
     }    

@@ -14,13 +14,12 @@
   <ng-template #afficheListeVideos>
       <div class="row">
           <div class="col-lg">
-            <div class="nav-item dropdown" appDropdown>
-              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  date : {{filtreDate}}
+            <div class="nav-item dropdown"  *ngIf="filtreConcert !== undefined" appDropdown>
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{filtreConcert.date}} : {{filtreConcert.libelle}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
-                  <a class="dropdown-item" *ngIf='filtreDate !== "(aucune)"' (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
+                  <a class="dropdown-item" *ngFor="let concert of concertsTab" (click)="onFiltreDate(concert)">{{concert.date}} : {{concert.libelle}}</a>
               </div>
             </div>      
           </div>
@@ -60,11 +59,10 @@
         <div class="row">
           <div class="nav-item dropdown" appDropdown>
               <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  date : {{filtreDate}}
+                {{filtreConcert.date}} : {{filtreConcert.libelle}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" *ngFor="let dateC of datesTab" (click)="onFiltreDate(dateC)">{{dateC}}</a>
-                  <a class="dropdown-item" *ngIf='filtreDate !== "(aucune)"' (click)="onEffaceFiltreDate()"><i>(aucune)</i></a>
+                  <a class="dropdown-item" *ngFor="let concert of concertsTab" (click)="onFiltreDate(concert)">{{concert.date}} : {{concert.libelle}}</a>
               </div>
           </div>      
         </div><!-- row -->

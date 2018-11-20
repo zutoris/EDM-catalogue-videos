@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VideoService } from '../services/video.service';
 import { Video } from '../models/video';
 import { Subscription} from 'rxjs';
+import { Concert } from '../models/Concert';
 
 @Component({
   selector: 'app-navigue',
@@ -14,42 +15,40 @@ export class NavigueComponent implements OnInit {
   videosSubscription:Subscription;
   dateSubscription:Subscription;
 
-  datesTab:string[]; // ensemble des dates
-  filtreDate:string; // date sélectionnée
+  concertsTab:Concert[]; // ensemble des concerts
+  filtreConcert:Concert; // date sélectionnée
   videoSelectionnee:Video;
 
   constructor(private videoService:VideoService) {
-    this.datesTab = this.videoService.datesTab;
   }
 
   ngOnInit() {
+    this.dateSubscription = 
+        this.videoService.concertSubject.subscribe(
+          (d: any)=>{
+            this.concertsTab = d;
+            if (this.concertsTab !== undefined){
+              this.filtreConcert = this.concertsTab[0];
+            }
+          }
+        );
+
     this.videosSubscription = 
       this.videoService.videosSubject.subscribe(
         (v: any)=>{
           this.videosTab = v;
         }
       );
-
-    this.dateSubscription = 
-        this.videoService.dateSubject.subscribe(
-          (d: any)=>{
-            this.filtreDate = d;
-          }
-        );
   }
 
   charge(){
-    this.videoService.charge(this.filtreDate);
+    this.videoService.charge(this.filtreConcert);
     this.videoService.emitVideoSubject();
   }
 
-  onFiltreDate(dateC:string){
-    console.log("onFiltreDate "+dateC);
-    this.filtreDate = dateC;
-    this.charge();
-  }
-  onEffaceFiltreDate(){
-    this.filtreDate = this.videoService.aucuneDate;
+  onFiltreDate(conc:Concert){
+    console.log("onFiltreDate "+conc.date);
+    this.filtreConcert = conc;
     this.charge();
   }
 
