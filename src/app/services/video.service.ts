@@ -44,6 +44,7 @@ export class VideoService {
           if (this.concertsTab == undefined){
             console.log("Erreur : téléchargement des dates plus long que celui des vidéos.")
           }
+          this.repartitVideosParConcert();
           this.charge(this.concertsTab[0]);
           this.emitVideoSubject();
           //console.log("nombre de vidéos importées : " + this.videosTab.length);
@@ -67,17 +68,29 @@ export class VideoService {
     }
   }
 
-  charge(filtreDate:Concert){
-    this.videosAfficheesTab = [];
-    let dateConcertAAfficher:string = filtreDate.date;
-
-    for (let vid of this.videosTab){
-      if (dateConcertAAfficher === vid.date){
-        this.videosAfficheesTab.push(vid);
-      }
-    }    
+  charge(concertChoisi:Concert){
+    this.videosAfficheesTab = concertChoisi.videos;
   }
 
+  repartitVideosParConcert(){
+    for (let concert of this.concertsTab){
+      concert.videos = [];
+    }
+    let dernierConcert:Concert;
+    for (let vid of this.videosTab){
+      if (dernierConcert !== undefined && vid.date == dernierConcert.date){
+        dernierConcert.videos.push(vid);
+      }else{
+        for (let concert of this.concertsTab){
+          if (vid.date == concert.date){
+            concert.videos.push(vid);
+            dernierConcert = concert;
+            break;
+          }
+        }
+      }
+    }
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
