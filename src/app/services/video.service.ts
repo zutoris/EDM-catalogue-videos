@@ -24,7 +24,6 @@ export class VideoService {
       .subscribe(
         (response) => {
           this.concertsTab = response;
-          this.buildDatesList();
           this.concertSubject.next(this.concertsTab);
         },(error)=>{
           console.log('error in calling concerts-list.json : '+JSON.stringify(error));
@@ -60,14 +59,6 @@ export class VideoService {
 		this.videosSubject.next(this.videosAfficheesTab);
 	}
 
-  // Constitution de la liste des dates de concert
-  buildDatesList(){
-    let identifiant:number = 0;
-    for (let c of this.concertsTab){
-      c.id = identifiant++;
-    }
-  }
-
   charge(concertChoisi:Concert){
     this.videosAfficheesTab = concertChoisi.videos;
   }
@@ -80,7 +71,7 @@ export class VideoService {
     for (let vid of this.videosTab){
       if (dernierConcert !== undefined && vid.date == dernierConcert.date){
         dernierConcert.videos.push(vid);
-      }else{
+      } else {
         for (let concert of this.concertsTab){
           if (vid.date == concert.date){
             concert.videos.push(vid);
