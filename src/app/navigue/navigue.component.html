@@ -30,7 +30,7 @@
       Liste des vidéos :
       <div class="row" *ngFor="let v of videosTab" class="thumbnail">
           <a (click)="onRegardeVideo(v)">
-            <img src={{v.cheminImage}} />
+            <img src={{v.cheminImage}} alt="Vidéo en cliquant sur ce texte."/>
             <div class="caption">
               <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
               &nbsp;
@@ -49,9 +49,10 @@
             Your browser does not support the video tag.
         </video>      
         <div class="caption">
-                <div class="text-primary"><div>{{videoSelectionnee.titre}}</div><div>{{videoSelectionnee.compositeur}}</div></div>
-                <div class="text-muted small">{{videoSelectionnee.date}}</div>
-            </div>
+            <div class="text-muted small" *ngIf="videoSelectionnee.formatCompatible !== undefined">Cette vidéo n'est pas lisible directement depuis le navigateur. Vous devez d'abord la télécharger, en faisant click droit, "Sauvegarder sous...".</div>
+            <div class="text-primary"><div>{{videoSelectionnee.titre}}</div><div>{{videoSelectionnee.compositeur}}</div></div>
+            <div class="text-muted small">{{videoSelectionnee.date}}</div>
+          </div>
       </div><!-- col-8 -->
 
 
@@ -69,10 +70,9 @@
       
         <br>
  
-        Liste des vidéos ({{videosTab.length}}) :
         <div class="row" *ngFor="let v of videosTab" class="thumbnail">
           <a (click)="onRegardeVideo(v)">
-                <img src={{v.cheminImage}}/>
+                <img src={{v.cheminImage}} alt="Vidéo en cliquant sur ce texte."/>
                 <div class="caption">
                     <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
                     &nbsp;
@@ -81,7 +81,7 @@
           </a>
         </div>
         
-      </div><!-- col-3 -->
+      </div><!-- col-4 -->
 
     </div><!-- rangée unique -->
   </ng-template>
