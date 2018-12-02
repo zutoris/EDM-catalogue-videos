@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { VideoService } from './services/video.service';
+import { StatService } from './services/stat.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -27,7 +28,8 @@ const appRoutes  =[
     BrowserModule
   ],
   providers: [
-    VideoService
+    VideoService,
+    StatService
   ],
   bootstrap: [AppComponent]
 })

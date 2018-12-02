@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VideoService } from '../services/video.service';
+import { StatService } from '../services/stat.service';
 import { Video } from '../models/video';
 import { Subscription} from 'rxjs';
 import { Concert } from '../models/Concert';
@@ -19,7 +20,7 @@ export class NavigueComponent implements OnInit {
   filtreConcert:Concert; // date sélectionnée
   videoSelectionnee:Video;
 
-  constructor(private videoService:VideoService) {
+  constructor(private videoService:VideoService, private statService:StatService) {
   }
 
   ngOnInit() {
@@ -54,6 +55,6 @@ export class NavigueComponent implements OnInit {
 
   onRegardeVideo(video:Video){
     this.videoSelectionnee = video;
-    this.videoService.enregistreStat(video);
+    this.statService.enregistreStat(video);
   }
 }
