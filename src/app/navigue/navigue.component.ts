@@ -54,5 +54,6 @@ export class NavigueComponent implements OnInit {
 
   onRegardeVideo(video:Video){
     this.videoSelectionnee = video;
+    this.videoService.enregistreStat(video);
   }
 }
