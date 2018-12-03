@@ -41,7 +41,9 @@ export class VideoService {
           this.videosTab=response;
           //let heureTriFini:Date=new Date();
           if (this.concertsTab == undefined){
-            console.log("Erreur : téléchargement des dates plus long que celui des vidéos.")
+            console.log("Téléchargement des dates plus long que celui des vidéos, donc attente...")
+            do {
+            } while(this.concertsTab == undefined);
           }
           this.repartitVideosParConcert();
           this.charge(this.concertsTab[0]);

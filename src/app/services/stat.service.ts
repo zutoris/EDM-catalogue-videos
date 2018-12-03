@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Video } from '../models/video';
 import { Stat } from '../models/stat';
+import { AppSettings } from '../appSettings';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class StatService {
   enregistreStat(videoRegardee:Video){
     let heureDebut:Date = new Date();
     this.httpClient
-	    .get<Stat[]>("https://*****.firebaseio.com/statistiques.json")
+	    .get<Stat[]>("https://" + AppSettings.FIREBASE_ENDPOINT + ".firebaseio.com/statistiques.json")
 	    .subscribe(
 	      (response) => {
           let stats:Stat[];
@@ -44,7 +45,7 @@ export class StatService {
           }
 
           this.httpClient
-            .put("https://*****.firebaseio.com/statistiques.json",
+            .put("https://" + AppSettings.FIREBASE_ENDPOINT + ".firebaseio.com/statistiques.json",
             stats)
             .subscribe(
               () => {
