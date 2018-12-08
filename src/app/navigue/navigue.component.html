@@ -14,7 +14,7 @@
   <div *ngIf="videoSelectionnee == undefined;then afficheListeVideos else afficheVideoSelectionnee"></div>
   <ng-template #afficheListeVideos>
       <div class="row">
-          <div class="col-lg">
+        <div class="col-lg">
             <div class="nav-item dropdown"  *ngIf="filtreConcert !== undefined" appDropdown>
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{filtreConcert.date}} : {{filtreConcert.libelle}}
@@ -23,10 +23,9 @@
                   <a class="dropdown-item" *ngFor="let concert of concertsTab" (click)="onFiltreDate(concert)">{{concert.date}} : {{concert.libelle}}</a>
               </div>
             </div>      
-          </div>
-      
-        </div> <!-- row -->
-        <br>
+        </div>
+      </div> <!-- row -->
+      <br>
  
       Liste des vidéos :
       <div class="row" *ngFor="let v of videosTab" class="thumbnail">
@@ -45,44 +44,46 @@
 
   <ng-template #afficheVideoSelectionnee>
     <div class="row"><!-- rangée unique -->
-      <div class="col-lg-8">
-        <video width="720" height="405" [src] = "videoSelectionnee.cheminVideo" type="video/mp4" autoplay controls #videoPlayer><!-- autoplay width="860" height="654"  1440 1080    youtube: 854px 480px  -->
-            Your browser does not support the video tag.
-        </video>      
-        <div class="caption">
+      <div class="col-lg-8 col-xs-offset-2 content col-md-offset-2">
+        <div style="width:100%;">
+          <video width="720" height="405" [src] = "videoSelectionnee.cheminVideo" type="video/mp4" autoplay controls #videoPlayer><!-- autoplay width="860" height="654"  1440 1080    youtube: 854px 480px  -->
+            Votre navigateur ne prend pas en compte le tag vidéo.
+          </video>      
+          <div class="caption">
             <div class="text-muted small" *ngIf="videoSelectionnee.formatCompatible !== undefined">Cette vidéo n'est pas lisible directement depuis le navigateur. Vous devez d'abord la télécharger, en faisant click droit, "Sauvegarder sous...".</div>
             <div class="text-primary"><div>{{videoSelectionnee.titre}}</div><div>{{videoSelectionnee.compositeur}}</div></div>
             <div class="text-muted small">{{videoSelectionnee.date}}</div>
-          </div>
-      </div><!-- col-8 -->
+          </div>     
+        </div>
+      </div>
 
-
-      <div class="col-lg-4">
-        <div class="row">
-          <div class="nav-item dropdown" appDropdown>
+      <div class="col-lg-4 col-xs-2 side">
+        <div style="position:relative;width:100%;height:100%;">
+          <div class="top" style="top:10px;width:100%;height: 60px; position:absolute;">
+            <div class="nav-item dropdown" appDropdown>
               <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{filtreConcert.date}} : {{filtreConcert.libelle}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" *ngFor="let concert of concertsTab" (click)="onFiltreDate(concert)">{{concert.date}} : {{concert.libelle}}</a>
               </div>
-          </div>      
-        </div><!-- row -->
-      
-        <br>
- 
-        <div class="row" *ngFor="let v of videosTab" class="thumbnail">
-          <a (click)="onRegardeVideo(v)">
-                <img src={{v.cheminImage}} alt="Vidéo en cliquant sur ce texte."/>
-                <div class="caption">
-                    <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
-                    &nbsp;
-                    <!-- <div class="text-muted small">{{v.date}}</div> -->
-                </div>
-          </a>
+            </div>      
+          </div>
+
+          <div class="scroll-area">
+            <div class="row" *ngFor="let v of videosTab" class="thumbnail">
+              <a (click)="onRegardeVideo(v)">
+                    <img src={{v.cheminImage}} alt="Vidéo en cliquant sur ce texte."/>
+                    <div class="caption">
+                        <div class="text-primary"><div>{{v.titre}}</div><div>{{v.compositeur}}</div></div>
+                        &nbsp;
+                        <!-- <div class="text-muted small">{{v.date}}</div> -->
+                    </div>
+              </a>
+            </div>
+          </div>
         </div>
-        
-      </div><!-- col-4 -->
+     </div> 
 
     </div><!-- rangée unique -->
   </ng-template>
