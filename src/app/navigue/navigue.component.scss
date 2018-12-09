@@ -10,7 +10,6 @@ video {
 }
 
 .combo-concerts{
-  top:10px;
   height: 60px; 
 }
 
@@ -28,22 +27,14 @@ video {
   
   .side{
     position:fixed;
-    right:0;
-    height:100%;
-    padding:0;
   }
 
   .combo-concerts{
-    top:10px;
-    height: 60px; 
     position:absolute;
   }
 
   .scroll-area{
-    width:100%;
     height:calc(100% - 60px);
-    margin-top:60px;
-    float:left;
     overflow-y:scroll;
   }
 }
