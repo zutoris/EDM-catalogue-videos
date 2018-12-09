@@ -4,9 +4,15 @@
     right:0;
     height:100%;
     padding:0;
-  }
-  
-  .scroll-area{
+}
+
+.combo-concerts{
+  top:10px;
+  height: 60px; 
+  position:absolute;
+}
+
+.scroll-area{
     width:100%;
     height:calc(100% - 60px);
     margin-top:60px;
