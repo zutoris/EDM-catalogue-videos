@@ -1,0 +1,40 @@
+video { 
+  width:100%;
+  height:auto;
+}
+
+.side{
+  right:0;
+  height:100%;
+  padding:0;
+}
+
+.combo-concerts{
+  height: 60px; 
+}
+
+.scroll-area{
+  width:100%;
+  margin-top:60px;
+  float:left;
+}
+
+@media (min-width: 1200px) {
+  video { 
+    width:720;
+    height:540;
+  }
+  
+  .side{
+    position:fixed;
+  }
+
+  .combo-concerts{
+    position:absolute;
+  }
+
+  .scroll-area{
+    height:calc(100% - 60px);
+    overflow-y:scroll;
+  }
+}
