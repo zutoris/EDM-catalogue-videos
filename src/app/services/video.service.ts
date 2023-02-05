@@ -15,6 +15,7 @@ export class VideoService {
   concertSubject = new Subject();
 
   constructor(private httpClient:HttpClient) { 
+    console.log("début du consructeur de VideoService ");
     this.videosAfficheesTab = [];
     this.videosTab = [];
 
@@ -69,7 +70,7 @@ export class VideoService {
     for (let concert of this.concertsTab){
       concert.videos = [];
     }
-    let dernierConcert:Concert;
+    let dernierConcert:Concert = this.concertsTab[0]; // affectation servant uniquement à la compilation
     for (let vid of this.videosTab){
       if (dernierConcert !== undefined && vid.date == dernierConcert.date){
         dernierConcert.videos.push(vid);

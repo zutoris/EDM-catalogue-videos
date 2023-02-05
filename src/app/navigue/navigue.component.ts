@@ -3,7 +3,7 @@ import { VideoService } from '../services/video.service';
 import { StatService } from '../services/stat.service';
 import { Video } from '../models/video';
 import { Subscription} from 'rxjs';
-import { Concert } from '../models/Concert';
+import { Concert } from '../models/concert';
 
 @Component({
   selector: 'app-navigue',
@@ -24,12 +24,14 @@ export class NavigueComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("début de ngOnInit ");
     this.dateSubscription = 
         this.videoService.concertSubject.subscribe(
           (d: any)=>{
             this.concertsTab = d;
             if (this.concertsTab !== undefined){
               this.filtreConcert = this.concertsTab[0];
+              console.log("filtreConcert valorisé avec {"+this.concertsTab[0].date+", "+this.concertsTab[0].libelle+"}");
             }
           }
         );
@@ -55,6 +57,7 @@ export class NavigueComponent implements OnInit {
 
   onRegardeVideo(video:Video){
     this.videoSelectionnee = video;
-    this.statService.enregistreStat(video);
+    // désactivation des statistiques, car la BdD est à refaire avec une connexion sécurisée
+    //this.statService.enregistreStat(video);
   }
 }

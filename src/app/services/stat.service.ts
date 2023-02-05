@@ -26,7 +26,7 @@ export class StatService {
             stats = [];
           }
           let trouve:boolean = false;
-          let indiceTab:number;
+          let indiceTab:number = -1;
           for (var i=0;i<stats.length && !trouve;i++){
             if (stats[i].idVideo === videoRegardee.id){
               trouve = true;
