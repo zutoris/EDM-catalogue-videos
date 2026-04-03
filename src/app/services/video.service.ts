@@ -19,9 +19,8 @@ export class VideoService {
     this.videosAfficheesTab = [];
     this.videosTab = [];
 
-    let urlListeConcert = 'http://www.ecole-musique-sautron.fr/data/concerts-list.json';
-  	this.httpClient
-      .get<any>(urlListeConcert)
+    this.httpClient
+      .get<any>('/data/concerts-list.json')
       .subscribe(
         (response) => {
           this.concertsTab = response;
@@ -31,10 +30,9 @@ export class VideoService {
         }
       );
 
-    let url = 'http://www.ecole-musique-sautron.fr/data/video-list.json';
     //let heuredebut:Date=new Date();
-  	this.httpClient
-      .get<any>(url)
+    this.httpClient
+      .get<any>('/data/video-list.json')
       .subscribe(
         (response) => {
           //let heureTelechargementFini:Date=new Date();

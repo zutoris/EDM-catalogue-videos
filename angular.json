@@ -30,6 +30,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/videos/",
               "budgets": [
                 {
                   "type": "initial",
@@ -98,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
