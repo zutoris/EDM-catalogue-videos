@@ -55,6 +55,13 @@ export class NavigueComponent implements OnInit {
     this.charge();
   }
 
+  onConcertChange(event: any){
+    const selectedIndex = parseInt(event.target.value);
+    if (selectedIndex >= 0 && selectedIndex < this.concertsTab.length) {
+      this.onFiltreDate(this.concertsTab[selectedIndex]);
+    }
+  }
+
   onRegardeVideo(video:Video){
     this.videoSelectionnee = video;
     // désactivation des statistiques, car la BdD est à refaire avec une connexion sécurisée

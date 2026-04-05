@@ -14,8 +14,8 @@
   <div *ngIf="videoSelectionnee == undefined;then afficheListeVideos else afficheVideoSelectionnee"></div>
   <ng-template #afficheListeVideos>
       <div class="row">
-        <select class="form-select" *ngIf="filtreConcert !== undefined" >
-          <option *ngFor="let audition of concertsTab" (click)="onFiltreDate(audition)">
+        <select class="form-select" *ngIf="filtreConcert !== undefined" (change)="onConcertChange($event)">
+          <option *ngFor="let audition of concertsTab; let i = index" [value]="i" [selected]="audition == filtreConcert">
             {{audition.date}} {{audition.libelle}}</option>
         </select>
       </div> <!-- row -->
@@ -54,8 +54,8 @@
       <div class="col-lg-4 col-xs-2 side">
         <div style="height:100%;"> 
           <div class="combo-concerts">
-            <select class="form-select">
-              <option *ngFor="let audition of concertsTab" (click)="onFiltreDate(audition)" [selected]="audition == filtreConcert">
+            <select class="form-select" (change)="onConcertChange($event)">
+              <option *ngFor="let audition of concertsTab; let i = index" [value]="i" [selected]="audition == filtreConcert">
                 {{audition.date}} {{audition.libelle}}</option>
             </select>
           </div>
